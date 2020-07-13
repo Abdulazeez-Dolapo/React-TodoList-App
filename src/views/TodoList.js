@@ -9,13 +9,13 @@ class TodoList extends Component {
 			todoList: [],
 		}
 		this.updateTodoList = this.updateTodoList.bind(this)
+		this.markAsCompleted = this.markAsCompleted.bind(this)
+		this.deleteTodo = this.deleteTodo.bind(this)
 	}
 
 	updateTodoList(todo) {
-		// console.log("object", todo)
 		this.setState(prevState => {
 			const todoList = [...prevState.todoList]
-			// console.log(todoList)
 			todoList.push(todo)
 			return {
 				todoList,
@@ -23,18 +23,42 @@ class TodoList extends Component {
 		})
 	}
 
+	markAsCompleted(id) {
+		const todoList = this.state.todoList.map(todo => {
+			if (todo.id === id) {
+				todo.completed = !todo.completed
+			}
+			return todo
+		})
+		this.setState({
+			todoList,
+		})
+	}
+
+	deleteTodo(id) {
+		const todoList = this.state.todoList.filter(todo => todo.id !== id)
+		this.setState({
+			todoList,
+		})
+	}
+
 	render() {
+		const todo = this.state.todoList.map((todo, index) => (
+			<TodoItem
+				markAsCompleted={this.markAsCompleted}
+				deleteTodo={this.deleteTodo}
+				key={index}
+				todo={todo}
+			/>
+		))
+
 		return (
 			<div>
 				<div>
 					<AddTodo updateTodos={this.updateTodoList} />
 				</div>
 
-				<div>
-					{this.state.todoList.map((todo, index) => {
-						return <TodoItem key={index} todo={todo} />
-					})}
-				</div>
+				<div>{todo}</div>
 			</div>
 		)
 	}

@@ -20,9 +20,11 @@ class AddTodo extends Component {
 
 	handleSubmit(e) {
 		e.preventDefault()
+		const id = Math.random().toString(16).slice(2)
 		const todo = {
 			item: this.state.todo,
 			completed: false,
+			id,
 		}
 
 		this.setState({

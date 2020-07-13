@@ -1,9 +1,29 @@
 import React from "react"
 
-function TodoItem({ todo }) {
+function TodoItem({ todo, markAsCompleted, deleteTodo }) {
+	const completedTodoStyling = {
+		textDecoration: "line-through",
+		fontStyle: "italic",
+		color: "grey",
+	}
 	return (
 		<div>
-			{todo.item} <button>Delete</button>
+			<div
+				onClick={() => {
+					markAsCompleted(todo.id)
+				}}
+				style={todo.completed ? completedTodoStyling : null}
+			>
+				{todo.item}
+			</div>
+
+			<button
+				onClick={() => {
+					deleteTodo(todo.id)
+				}}
+			>
+				Delete
+			</button>
 		</div>
 	)
 }
