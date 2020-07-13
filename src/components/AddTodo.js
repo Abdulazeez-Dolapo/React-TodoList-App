@@ -5,10 +5,13 @@ class AddTodo extends Component {
 		super(props)
 		this.state = {
 			todo: "",
+			error: false,
+			errorMessage: "",
 		}
 
 		this.handleSubmit = this.handleSubmit.bind(this)
 		this.handleInput = this.handleInput.bind(this)
+		this.checkErrors = this.checkErrors.bind(this)
 	}
 
 	handleInput(e) {
@@ -18,8 +21,25 @@ class AddTodo extends Component {
 		})
 	}
 
+	checkErrors() {
+		if (this.state.todo.trim().length < 5) {
+			this.setState({
+				error: true,
+				errorMessage: "A todo should not contain less than 5 characters",
+			})
+			return true
+		} else {
+			this.setState({
+				error: false,
+				errorMessage: "",
+			})
+			return false
+		}
+	}
+
 	handleSubmit(e) {
 		e.preventDefault()
+		if (this.checkErrors()) return
 		const id = Math.random().toString(16).slice(2)
 		const todo = {
 			item: this.state.todo,
@@ -29,25 +49,28 @@ class AddTodo extends Component {
 
 		this.setState({
 			todo: "",
+			error: false,
+			errorMessage: "",
 		})
 		this.props.updateTodos(todo)
 	}
 
 	render() {
 		return (
-			<div>
+			<div className="add-todo-item">
 				<form onSubmit={this.handleSubmit}>
-					<label>
-						Add Todo
-						<input
-							value={this.state.todo}
-							placeholder="Learn React"
-							onChange={this.handleInput}
-						/>
-					</label>
+					<label>Add Todo</label>
+					<input
+						value={this.state.todo}
+						placeholder="e.g build a react portofolio site"
+						onChange={this.handleInput}
+					/>
 
-					<button>Add</button>
+					<button className="add">Add</button>
 				</form>
+				<p className="error">
+					{this.state.error && this.state.errorMessage}
+				</p>
 			</div>
 		)
 	}

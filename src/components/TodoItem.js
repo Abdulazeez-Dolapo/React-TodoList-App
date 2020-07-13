@@ -4,11 +4,11 @@ function TodoItem({ todo, markAsCompleted, deleteTodo }) {
 	const completedTodoStyling = {
 		textDecoration: "line-through",
 		fontStyle: "italic",
-		color: "grey",
 	}
 	return (
-		<div>
+		<div className="todo-item">
 			<div
+				className="text"
 				onClick={() => {
 					markAsCompleted(todo.id)
 				}}

@@ -53,12 +53,13 @@ class TodoList extends Component {
 		))
 
 		return (
-			<div>
+			<div className="todo-list">
+				<h1>TodoList</h1>
 				<div>
 					<AddTodo updateTodos={this.updateTodoList} />
 				</div>
 
-				<div>{todo}</div>
+				<div className="container">{todo}</div>
 			</div>
 		)
 	}
